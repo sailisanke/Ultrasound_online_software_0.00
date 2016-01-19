@@ -1,13 +1,14 @@
 #include "video_play.h"
+#include "featureparemeters.h"
 #include <QFileDialog>
 #include <QMessageBox>
 Video_play::Video_play(QWidget *parent)
 	: QMainWindow(parent)
 {
 	myPlayer = new Player();
-	QObject::connect(myPlayer, SIGNAL(processedImage(QImage)),
-		this, SLOT(updatePlayerUI(QImage)));
+	QObject::connect(myPlayer, SIGNAL(processedImage(QImage)),this, SLOT(updatePlayerUI(QImage)));
 	ui.setupUi(this);
+	
 }
 
 Video_play::~Video_play()
@@ -51,4 +52,24 @@ void Video_play::on_playVideo_clicked()
 		myPlayer->Stop();
 		ui.playVideo->setText(tr("Play"));
 	}
+}
+
+void Video_play::on_actionFeature_triggered()
+{
+	featureparemeters featureDialog(this);
+	if (featureDialog.exec() == QDialog::Accepted)
+	{
+		currentParametersSettings.channelNumber =  featureDialog.getchannelNumber();
+		currentParametersSettings.windowLength =  featureDialog.getwindowLength();
+		currentParametersSettings.overlap =  featureDialog.getoverlap();
+		currentParametersSettings.featureType =  featureDialog.getfeatureType();
+		ui.dispalyMessage->setText(currentParametersSettings.featureType+currentParametersSettings.channelNumber+currentParametersSettings.windowLength+currentParametersSettings.overlap);
+		ui.dispalyMessage->hide();
+	}
+	 // 模态对话框
+// 	
+// 	featureparemeters *featureDialog = new featureparemeters;
+//  featureDialog->setAttribute(Qt::WA_DeleteOnClose); // 释放内存
+// 	featureDialog->show(); // 非模态对话框
+
 }

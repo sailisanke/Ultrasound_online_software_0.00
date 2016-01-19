@@ -59,6 +59,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_player.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="featureparemeters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_featureparemeters.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_featureparemeters.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="video_play.h">
@@ -73,9 +82,18 @@
     <CustomBuild Include="player.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="featureparemeters.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="featureparemeters.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_video_play.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_featureparemeters.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

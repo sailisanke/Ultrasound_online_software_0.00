@@ -59,6 +59,32 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="dispalyMessage">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>540</y>
+      <width>591</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DisplayDatafromDialog">
+    <property name="geometry">
+     <rect>
+      <x>860</x>
+      <y>520</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Display</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -69,6 +95,13 @@
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSetting">
+    <property name="title">
+     <string>Setting</string>
+    </property>
+    <addaction name="actionFeature"/>
+   </widget>
+   <addaction name="menuSetting"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -79,10 +112,32 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFeature">
+   <property name="text">
+    <string>Feature</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="video_play.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>DisplayDatafromDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>dispalyMessage</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>906</x>
+     <y>573</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>587</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

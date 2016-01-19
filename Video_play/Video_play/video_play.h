@@ -12,15 +12,25 @@ class Video_play : public QMainWindow
 public:
 	Video_play(QWidget *parent = 0);
 	~Video_play();
+	struct parametersSettings 
+	{
+		QString featureType;
+		QString channelNumber;
+		QString windowLength;
+		QString overlap;
+	};
+	
 
 private:
 	Ui::Video_playClass ui;
 	Player* myPlayer;
+	parametersSettings currentParametersSettings;
 
 private slots:
 	void updatePlayerUI(QImage img);
 	void on_loadVideo_clicked();
 	void on_playVideo_clicked();
+	void on_actionFeature_triggered();
 
 };
 

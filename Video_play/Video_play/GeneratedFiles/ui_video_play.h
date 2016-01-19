@@ -16,6 +16,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -27,11 +28,15 @@ QT_BEGIN_NAMESPACE
 class Ui_Video_playClass
 {
 public:
+    QAction *actionFeature;
     QWidget *centralWidget;
     QPushButton *loadVideo;
     QPushButton *playVideo;
     QLabel *label;
+    QLabel *dispalyMessage;
+    QPushButton *DisplayDatafromDialog;
     QMenuBar *menuBar;
+    QMenu *menuSetting;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -40,6 +45,8 @@ public:
         if (Video_playClass->objectName().isEmpty())
             Video_playClass->setObjectName(QStringLiteral("Video_playClass"));
         Video_playClass->resize(1128, 749);
+        actionFeature = new QAction(Video_playClass);
+        actionFeature->setObjectName(QStringLiteral("actionFeature"));
         centralWidget = new QWidget(Video_playClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         loadVideo = new QPushButton(centralWidget);
@@ -53,10 +60,18 @@ public:
         label->setGeometry(QRect(150, 70, 591, 361));
         label->setAutoFillBackground(false);
         label->setStyleSheet(QStringLiteral("Background-color: #000;"));
+        dispalyMessage = new QLabel(centralWidget);
+        dispalyMessage->setObjectName(QStringLiteral("dispalyMessage"));
+        dispalyMessage->setGeometry(QRect(150, 540, 591, 16));
+        DisplayDatafromDialog = new QPushButton(centralWidget);
+        DisplayDatafromDialog->setObjectName(QStringLiteral("DisplayDatafromDialog"));
+        DisplayDatafromDialog->setGeometry(QRect(860, 520, 93, 28));
         Video_playClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Video_playClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1128, 26));
+        menuSetting = new QMenu(menuBar);
+        menuSetting->setObjectName(QStringLiteral("menuSetting"));
         Video_playClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Video_playClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -65,7 +80,11 @@ public:
         statusBar->setObjectName(QStringLiteral("statusBar"));
         Video_playClass->setStatusBar(statusBar);
 
+        menuBar->addAction(menuSetting->menuAction());
+        menuSetting->addAction(actionFeature);
+
         retranslateUi(Video_playClass);
+        QObject::connect(DisplayDatafromDialog, SIGNAL(clicked()), dispalyMessage, SLOT(show()));
 
         QMetaObject::connectSlotsByName(Video_playClass);
     } // setupUi
@@ -73,9 +92,13 @@ public:
     void retranslateUi(QMainWindow *Video_playClass)
     {
         Video_playClass->setWindowTitle(QApplication::translate("Video_playClass", "Video_play", 0));
+        actionFeature->setText(QApplication::translate("Video_playClass", "Feature", 0));
         loadVideo->setText(QApplication::translate("Video_playClass", "Load Video", 0));
         playVideo->setText(QApplication::translate("Video_playClass", "Play", 0));
         label->setText(QString());
+        dispalyMessage->setText(QString());
+        DisplayDatafromDialog->setText(QApplication::translate("Video_playClass", "Display", 0));
+        menuSetting->setTitle(QApplication::translate("Video_playClass", "Setting", 0));
     } // retranslateUi
 
 };
