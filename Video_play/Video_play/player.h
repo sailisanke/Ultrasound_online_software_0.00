@@ -32,7 +32,8 @@ private:
 	QImage img;
 
 signals:
-	void processedImage(const QImage &Image);
+	void processedImageSignal(const QImage &Image);
+	/*void extractFeatureSignal(const QImage &matImage);*/
 
 protected:
 	void run();

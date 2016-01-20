@@ -6,14 +6,22 @@ Video_play::Video_play(QWidget *parent)
 	: QMainWindow(parent)
 {
 	myPlayer = new Player();
-	QObject::connect(myPlayer, SIGNAL(processedImage(QImage)),this, SLOT(updatePlayerUI(QImage)));
+	featureDialog = new featureparemeters;
+
+
+	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(updatePlayerUI(QImage)));
+	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(getFeature(QImage)));
+
+
 	ui.setupUi(this);
+	
 	
 }
 
 Video_play::~Video_play()
 {
 	delete myPlayer;
+	delete featureDialog;
 }
 
 void Video_play::updatePlayerUI(QImage img)
@@ -23,7 +31,16 @@ void Video_play::updatePlayerUI(QImage img)
 		ui.label->setAlignment(Qt::AlignCenter);
 		ui.label->setPixmap(QPixmap::fromImage(img).scaled(ui.label->size(),
 			Qt::KeepAspectRatio, Qt::FastTransformation));
+		/*ui.label->show();*/
 	}
+}
+
+void Video_play::getFeature(QImage image)
+{
+	Mat matImage = Mat(image.height(),image.width(),CV_8UC1,(uchar*)image.bits(),image.bytesPerLine());
+	/*Mat matImage2 = cv::Mat(matImage.rows, matImage.cols, CV_8UC1 );*/
+	ui.dispalyMessage->setText("success!");
+	ui.dispalyMessage->show();
 }
 
 void Video_play::on_loadVideo_clicked()
@@ -56,15 +73,17 @@ void Video_play::on_playVideo_clicked()
 
 void Video_play::on_actionFeature_triggered()
 {
-	featureparemeters featureDialog(this);
-	if (featureDialog.exec() == QDialog::Accepted)
+	
+	if (featureDialog->exec() == QDialog::Accepted)
 	{
-		currentParametersSettings.channelNumber =  featureDialog.getchannelNumber();
-		currentParametersSettings.windowLength =  featureDialog.getwindowLength();
-		currentParametersSettings.overlap =  featureDialog.getoverlap();
-		currentParametersSettings.featureType =  featureDialog.getfeatureType();
-		ui.dispalyMessage->setText(currentParametersSettings.featureType+currentParametersSettings.channelNumber+currentParametersSettings.windowLength+currentParametersSettings.overlap);
-		ui.dispalyMessage->hide();
+		featureparemeters::featureSettings p = featureDialog->settings();
+// 		currentParametersSettings.channelNumber =  featureDialog.getchannelNumber();
+// 		currentParametersSettings.windowLength =  featureDialog.getwindowLength();
+// 		currentParametersSettings.overlap =  featureDialog.getoverlap();
+// 		currentParametersSettings.featureType =  featureDialog.getfeatureType();
+		/*ui.dispalyMessage->setText(currentParametersSettings.featureType+currentParametersSettings.channelNumber+currentParametersSettings.windowLength+currentParametersSettings.overlap);*/
+// 		ui.dispalyMessage->setText(p.featureType+p.channelNumber+p.windowLength+p.overlap);
+// 		ui.dispalyMessage->hide();
 	}
 	 // Ä£Ì¬¶Ô»°¿ò
 // 	

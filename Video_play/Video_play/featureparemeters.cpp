@@ -4,6 +4,9 @@ featureparemeters::featureparemeters(QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
+	connect(ui.buttonBox,SIGNAL(accepted()),this,SLOT(okButton()));
+	connect(ui.buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
+	
 }
 
 featureparemeters::~featureparemeters()
@@ -11,22 +14,41 @@ featureparemeters::~featureparemeters()
 
 }
 
-QString featureparemeters::getfeatureType()
+// QString featureparemeters::getfeatureType()
+// {
+// 	return ui.featureType->currentText();
+// }
+// 
+// QString featureparemeters::getchannelNumber()
+// {
+// 	return ui.channelNumber->text();
+// }
+// 
+// QString featureparemeters::getwindowLength()
+// {
+// 	return ui.windowLength->text();
+// }
+// 
+// QString featureparemeters::getoverlap()
+// {
+// 	return ui.overlap->text();
+// }
+
+void featureparemeters::okButton()
 {
-	return ui.featureType->currentText();
+	updateSettings();
+	accept();
 }
 
-QString featureparemeters::getchannelNumber()
+void featureparemeters::updateSettings()
 {
-	return ui.channelNumber->text();
+	currentFeatureSettings.channelNumber = ui.channelNumber->text();
+	currentFeatureSettings.windowLength = ui.windowLength->text();
+	currentFeatureSettings.overlap = ui.overlap->text();
+	currentFeatureSettings.featureType = ui.featureType->currentText();
 }
 
-QString featureparemeters::getwindowLength()
+featureparemeters::featureSettings featureparemeters::settings() const
 {
-	return ui.windowLength->text();
-}
-
-QString featureparemeters::getoverlap()
-{
-	return ui.overlap->text();
+	return currentFeatureSettings;
 }

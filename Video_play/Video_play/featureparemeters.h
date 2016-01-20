@@ -17,15 +17,21 @@ public:
 		QString windowLength;
 		QString overlap;
 	};
-	QString getfeatureType();
-	QString getchannelNumber();
-	QString getwindowLength();
-	QString getoverlap();
+// 	QString getfeatureType();
+// 	QString getchannelNumber();
+// 	QString getwindowLength();
+// 	QString getoverlap();
+	featureSettings settings() const;
+
+private slots:
+	void okButton();
+
 
 
 private:
 	Ui::featureparemeters ui;
 	featureSettings currentFeatureSettings;
+	void updateSettings();
 	
 };
 

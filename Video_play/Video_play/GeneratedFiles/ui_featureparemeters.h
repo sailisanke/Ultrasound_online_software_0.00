@@ -135,8 +135,6 @@ public:
         gridLayoutWidget->raise();
 
         retranslateUi(featureparemeters);
-        QObject::connect(buttonBox, SIGNAL(accepted()), featureparemeters, SLOT(accept()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), featureparemeters, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(featureparemeters);
     } // setupUi

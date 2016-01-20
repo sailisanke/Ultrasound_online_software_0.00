@@ -5,6 +5,9 @@
 #include "ui_video_play.h"
 #include <player.h>
 
+class featureparemeters;
+
+
 class Video_play : public QMainWindow
 {
 	Q_OBJECT
@@ -19,6 +22,7 @@ public:
 		QString windowLength;
 		QString overlap;
 	};
+	featureparemeters *featureDialog;
 	
 
 private:
@@ -28,6 +32,7 @@ private:
 
 private slots:
 	void updatePlayerUI(QImage img);
+	void getFeature(QImage);
 	void on_loadVideo_clicked();
 	void on_playVideo_clicked();
 	void on_actionFeature_triggered();
