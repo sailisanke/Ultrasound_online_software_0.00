@@ -71,6 +71,9 @@
     <ClCompile Include="D:\桌面_其他\汪洋\EMG_SHOW_MCU_20120831\svm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="feature.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="video_play.h">
@@ -100,6 +103,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="D:\桌面_其他\汪洋\EMG_SHOW_MCU_20120831\svm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="feature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

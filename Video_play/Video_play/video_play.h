@@ -18,9 +18,9 @@ public:
 	struct parametersSettings 
 	{
 		QString featureType;
-		QString channelNumber;
-		QString windowLength;
-		QString overlap;
+		int channelNumber;
+		int windowLength;
+		int overlap;
 	};
 	featureparemeters *featureDialog;
 	
@@ -36,6 +36,8 @@ private slots:
 	void on_loadVideo_clicked();
 	void on_playVideo_clicked();
 	void on_actionFeature_triggered();
+	void initialPart();
+	void initialSlots();
 
 };
 

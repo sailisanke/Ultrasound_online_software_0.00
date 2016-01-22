@@ -1,0 +1,51 @@
+#include "feature.h"
+
+const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSettings & currentParametersSettings)
+{
+	int imageColumnDistance = grayImage.cols/(currentParametersSettings.channelNumber + 1);
+	int step = currentParametersSettings.windowLength-currentParametersSettings.overlap;
+	int windowNumber = grayImage.rows/step +1;
+	Mat currentImageFeature( 2 * windowNumber,currentParametersSettings.channelNumber,CV_8UC1);
+	for (int i = 0; i < currentParametersSettings.channelNumber; i ++)
+	{
+		int channelPosition = imageColumnDistance * (i + 1);
+		Mat currentColumnData = grayImage.col(channelPosition);
+		Mat currentColumnFeature(windowNumber,2,CV_8UC1);
+		/*Mat currentColumnFeatureRow(1,2 * windowNumber,CV_8UC1);*/
+
+		for (int j=0; j < windowNumber -1; j++ )
+		{
+			int aaa = j * step + 1;
+			Mat windowData = currentColumnData(Range(j * step + 1, j * step + currentParametersSettings.windowLength),Range::all());
+			Mat windowFeature = getWindowFeature(windowData);
+			windowFeature.copyTo(currentColumnFeature.row(j));
+			/*hconcat(currentColumnFeature,windowFeature,currentColumnFeature);*/
+// 			Mat R(4, 3, CV_32F); // [4 rows x 3 cols] with float values
+// 			mat1.copyTo(R.col(0));
+// 			mat2.copyTo(R.col(1));
+// 			mat3.copyTo(R.col(2));
+// 			vector aa = windowData.data;
+		}
+		/*vconcat(currentColumnFeature.row(1),currentColumnFeature.row(2),currentColumnFeatureRow);*/
+		Mat mcurrentColumnFeatureRow = currentColumnFeature.reshape(1,2 * windowNumber);
+		/*hconcat(currentImageFeature,currentColumnFeatureRow,currentImageFeature);*/
+		mcurrentColumnFeatureRow.copyTo(currentImageFeature.col(i));
+		/*vconcat(currentImageFeature,currentColumnFeatureRow,currentImageFeature);*/
+	}
+
+	return currentImageFeature;
+}
+
+const Mat getWindowFeature(const Mat & windowData)
+{
+	Mat windowMean,windowStd,windowFeature;
+	meanStdDev(windowData,windowMean,windowStd);
+	hconcat(windowMean,windowStd,windowFeature);
+	return windowFeature;
+}
+
+// const Mat & getFeatureVector(const Mat & grayImage, const Video_play::parametersSettings & currentParametersSettings)
+// {
+// 	int a = grayImage.cols;
+// 	return grayImage;
+// }

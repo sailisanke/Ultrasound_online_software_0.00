@@ -4,6 +4,7 @@ featureparemeters::featureparemeters(QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
+	updateSettings();
 	connect(ui.buttonBox,SIGNAL(accepted()),this,SLOT(okButton()));
 	connect(ui.buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
 	

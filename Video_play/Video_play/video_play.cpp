@@ -1,16 +1,13 @@
 #include "video_play.h"
 #include "featureparemeters.h"
+#include "feature.h"
 #include <QFileDialog>
 #include <QMessageBox>
 Video_play::Video_play(QWidget *parent)
 	: QMainWindow(parent)
 {
-	myPlayer = new Player();
-	featureDialog = new featureparemeters;
-
-
-	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(updatePlayerUI(QImage)));
-	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(getFeature(QImage)));
+	initialPart();
+	initialSlots();
 
 
 	ui.setupUi(this);
@@ -39,8 +36,10 @@ void Video_play::getFeature(QImage image)
 {
 	Mat matImage = Mat(image.height(),image.width(),CV_8UC1,(uchar*)image.bits(),image.bytesPerLine());
 	/*Mat matImage2 = cv::Mat(matImage.rows, matImage.cols, CV_8UC1 );*/
-	ui.dispalyMessage->setText("success!");
-	ui.dispalyMessage->show();
+// 	ui.dispalyMessage->setText("success!");
+// 	ui.dispalyMessage->show();
+	Mat imageFeature = getImageFeature(matImage,currentParametersSettings);
+
 }
 
 void Video_play::on_loadVideo_clicked()
@@ -77,10 +76,10 @@ void Video_play::on_actionFeature_triggered()
 	if (featureDialog->exec() == QDialog::Accepted)
 	{
 		featureparemeters::featureSettings p = featureDialog->settings();
-// 		currentParametersSettings.channelNumber =  featureDialog.getchannelNumber();
-// 		currentParametersSettings.windowLength =  featureDialog.getwindowLength();
-// 		currentParametersSettings.overlap =  featureDialog.getoverlap();
-// 		currentParametersSettings.featureType =  featureDialog.getfeatureType();
+		currentParametersSettings.channelNumber =  p.windowLength.toInt();
+		currentParametersSettings.windowLength =  p.channelNumber.toInt();
+		currentParametersSettings.overlap =  p.overlap.toInt();;
+		currentParametersSettings.featureType =  p.featureType;
 		/*ui.dispalyMessage->setText(currentParametersSettings.featureType+currentParametersSettings.channelNumber+currentParametersSettings.windowLength+currentParametersSettings.overlap);*/
 // 		ui.dispalyMessage->setText(p.featureType+p.channelNumber+p.windowLength+p.overlap);
 // 		ui.dispalyMessage->hide();
@@ -91,4 +90,24 @@ void Video_play::on_actionFeature_triggered()
 //  featureDialog->setAttribute(Qt::WA_DeleteOnClose); // 释放内存
 // 	featureDialog->show(); // 非模态对话框
 
+}
+
+void Video_play::initialPart()
+{
+	myPlayer = new Player();
+
+
+	featureDialog = new featureparemeters;
+	featureparemeters::featureSettings p = featureDialog->settings();
+	currentParametersSettings.channelNumber =  p.channelNumber.toInt();
+	currentParametersSettings.windowLength =  p.windowLength.toInt();
+	currentParametersSettings.overlap =  p.overlap.toInt();
+	currentParametersSettings.featureType =  p.featureType;
+
+}
+
+void Video_play::initialSlots()
+{
+	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(updatePlayerUI(QImage)));
+	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(getFeature(QImage)));
 }
