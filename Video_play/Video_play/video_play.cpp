@@ -31,7 +31,7 @@ void Video_play::updatePlayerUI(QImage img)
 		/*ui.label->show();*/
 	}
 }
-
+std::ofstream ofresult( "feature.txt ",std::ios::app); 
 void Video_play::getFeature(QImage image)
 {
 	Mat matImage = Mat(image.height(),image.width(),CV_8UC1,(uchar*)image.bits(),image.bytesPerLine());
@@ -39,6 +39,10 @@ void Video_play::getFeature(QImage image)
 // 	ui.dispalyMessage->setText("success!");
 // 	ui.dispalyMessage->show();
 	Mat imageFeature = getImageFeature(matImage,currentParametersSettings);
+// 	file << imageFeature.data;
+// 	std::vector<uchar> array(imageFeature.rows*imageFeature.cols);
+// 	ofresult << array << std::endl;
+	writeMatToFile(imageFeature,"feature.txt");
 
 }
 
@@ -76,9 +80,9 @@ void Video_play::on_actionFeature_triggered()
 	if (featureDialog->exec() == QDialog::Accepted)
 	{
 		featureparemeters::featureSettings p = featureDialog->settings();
-		currentParametersSettings.channelNumber =  p.windowLength.toInt();
-		currentParametersSettings.windowLength =  p.channelNumber.toInt();
-		currentParametersSettings.overlap =  p.overlap.toInt();;
+		currentParametersSettings.windowLength =  p.windowLength.toInt();
+		currentParametersSettings.channelNumber =  p.channelNumber.toInt();
+		currentParametersSettings.overlap =  p.overlap.toInt();
 		currentParametersSettings.featureType =  p.featureType;
 		/*ui.dispalyMessage->setText(currentParametersSettings.featureType+currentParametersSettings.channelNumber+currentParametersSettings.windowLength+currentParametersSettings.overlap);*/
 // 		ui.dispalyMessage->setText(p.featureType+p.channelNumber+p.windowLength+p.overlap);
@@ -110,4 +114,25 @@ void Video_play::initialSlots()
 {
 	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(updatePlayerUI(QImage)));
 	QObject::connect(myPlayer, SIGNAL(processedImageSignal(QImage)),this, SLOT(getFeature(QImage)));
+}
+
+void Video_play::writeMatToFile(cv::Mat& m, const char* filename)
+{
+	using namespace std;
+	ofstream fout(filename,ios_base::app);
+	if(!fout)
+	{
+		cout<<"File Not Opened"<<endl;  return;
+	}
+
+	for(int i=0; i<m.rows; i++)
+	{
+		for(int j=0; j<m.cols; j++)
+		{
+			fout << (int)m.at<uchar>(i,j) << "\t";
+		}
+		fout<<endl;
+	}
+
+	fout.close();
 }

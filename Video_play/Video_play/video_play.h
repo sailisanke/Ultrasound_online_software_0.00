@@ -4,6 +4,8 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_video_play.h"
 #include <player.h>
+#include <iostream>
+#include <fstream>
 
 class featureparemeters;
 
@@ -38,7 +40,7 @@ private slots:
 	void on_actionFeature_triggered();
 	void initialPart();
 	void initialSlots();
-
+	void writeMatToFile(cv::Mat& m, const char* filename);
 };
 
 #endif // VIDEO_PLAY_H

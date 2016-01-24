@@ -57,7 +57,7 @@ public:
         playVideo->setGeometry(QRect(860, 350, 93, 28));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(150, 70, 520, 360));
+        label->setGeometry(QRect(150, 70, 500, 360));
         label->setAutoFillBackground(false);
         label->setStyleSheet(QStringLiteral("Background-color: #000;"));
         dispalyMessage = new QLabel(centralWidget);

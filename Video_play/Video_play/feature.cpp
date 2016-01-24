@@ -4,7 +4,7 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 {
 	int imageColumnDistance = grayImage.cols/(currentParametersSettings.channelNumber + 1);
 	int step = currentParametersSettings.windowLength-currentParametersSettings.overlap;
-	int windowNumber = grayImage.rows/step +1;
+	int windowNumber = (grayImage.rows - currentParametersSettings.windowLength)/step + 1;
 	Mat currentImageFeature( 2 * windowNumber,currentParametersSettings.channelNumber,CV_8UC1);
 	for (int i = 0; i < currentParametersSettings.channelNumber; i ++)
 	{
@@ -13,10 +13,10 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 		Mat currentColumnFeature(windowNumber,2,CV_8UC1);
 		/*Mat currentColumnFeatureRow(1,2 * windowNumber,CV_8UC1);*/
 
-		for (int j=0; j < windowNumber -1; j++ )
+		for (int j=0; j < windowNumber; j++ )
 		{
-			int aaa = j * step + 1;
-			Mat windowData = currentColumnData(Range(j * step + 1, j * step + currentParametersSettings.windowLength),Range::all());
+			/*int aaa = j * step + 1;*/
+			Mat windowData = currentColumnData(Range(j * step, j * step + currentParametersSettings.windowLength),Range::all());
 			Mat windowFeature = getWindowFeature(windowData);
 			windowFeature.copyTo(currentColumnFeature.row(j));
 			/*hconcat(currentColumnFeature,windowFeature,currentColumnFeature);*/
@@ -32,8 +32,8 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 		mcurrentColumnFeatureRow.copyTo(currentImageFeature.col(i));
 		/*vconcat(currentImageFeature,currentColumnFeatureRow,currentImageFeature);*/
 	}
-
-	return currentImageFeature;
+	
+	return currentImageFeature.reshape(1,currentImageFeature.rows*currentImageFeature.cols).t();
 }
 
 const Mat getWindowFeature(const Mat & windowData)
