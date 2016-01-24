@@ -39,6 +39,7 @@ void Video_play::getFeature(QImage image)
 // 	ui.dispalyMessage->setText("success!");
 // 	ui.dispalyMessage->show();
 	Mat imageFeature = getImageFeature(matImage,currentParametersSettings);
+	double ii = imageFeature.at<double>(0,0);
 // 	file << imageFeature.data;
 // 	std::vector<uchar> array(imageFeature.rows*imageFeature.cols);
 // 	ofresult << array << std::endl;
@@ -129,7 +130,8 @@ void Video_play::writeMatToFile(cv::Mat& m, const char* filename)
 	{
 		for(int j=0; j<m.cols; j++)
 		{
-			fout << (int)m.at<uchar>(i,j) << "\t";
+			double nnn = m.at<double>(i,j);
+			fout << nnn << "\t";
 		}
 		fout<<endl;
 	}
