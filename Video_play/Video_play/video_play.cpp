@@ -3,6 +3,11 @@
 #include "feature.h"
 #include <QFileDialog>
 #include <QMessageBox>
+#include <time.h>
+#include <iostream>
+#include <fstream>
+
+
 Video_play::Video_play(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -39,12 +44,23 @@ void Video_play::getFeature(QImage image)
 // 	ui.dispalyMessage->setText("success!");
 // 	ui.dispalyMessage->show();
 	Mat imageFeature = getImageFeature(matImage,currentParametersSettings);
-	double ii = imageFeature.at<double>(0,0);
+// 	double* pimg = (double*)(imageFeature.data);
+// 	double aaaa = pimg[0];
+// 	double bbbb = (double)imageFeature.data[0];
+	
+//	double ii = imageFeature.at<double>(0,0);
+// 	ofstream fw("feature.txt");
+// 	fw.write(imageFeature.data,strlen(imageFeature.data));
+//	fw<<imageFeature.data;
 // 	file << imageFeature.data;
 // 	std::vector<uchar> array(imageFeature.rows*imageFeature.cols);
 // 	ofresult << array << std::endl;
-	writeMatToFile(imageFeature,"feature.txt");
-
+	time_t  nowtime = time(NULL);  
+	struct tm  *p;
+	p = gmtime(&nowtime);  
+	char    filename[256] = {0}; 
+	sprintf(filename,"%d-%d-%d-%d-%d.txt",1900+p->tm_year,1+p->tm_mon,p->tm_mday,8+p->tm_hour,p->tm_min); 
+	writeMatToFile(imageFeature,currentParametersSettings.featureType.toLatin1()+filename);
 }
 
 void Video_play::on_loadVideo_clicked()

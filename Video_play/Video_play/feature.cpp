@@ -1,8 +1,8 @@
 #include "feature.h"
+#include <core\core_c.h>
 
 const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSettings & currentParametersSettings)
 {
-	
 	int imageColumnDistance = grayImage.cols/(currentParametersSettings.channelNumber + 1);
 	int step = currentParametersSettings.windowLength-currentParametersSettings.overlap;
 	int windowNumber = (grayImage.rows - currentParametersSettings.windowLength)/step + 1;
@@ -18,7 +18,17 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 		{
 			/*int aaa = j * step + 1;*/
 			Mat windowData = currentColumnData(Range(j * step, j * step + currentParametersSettings.windowLength),Range::all());
-			Mat windowFeature = getWindowFeature(windowData);
+
+			//判断使用哪种特征
+			Mat windowFeature;
+			if (currentParametersSettings.featureType == "mean and variance")
+			{
+				windowFeature = getWindowFeatureMeanVar(windowData);
+			}
+			else if(currentParametersSettings.featureType == "fitting coefficient")
+			{
+				windowFeature = getWindowFeatureCoefficient(windowData);
+			}
 			/*double ff = windowFeature.at<double>(0,0);*/
 			windowFeature.copyTo(currentColumnFeature.row(j));
 			/*double gg = currentColumnFeature.at<double>(0,0);*/
@@ -41,12 +51,46 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 	return currentImageFeature.reshape(1,currentImageFeature.rows*currentImageFeature.cols).t();
 }
 
-const Mat getWindowFeature(const Mat & windowData)
+
+
+//提取分析窗中的灰度值的均值和方差作为特征
+const Mat getWindowFeatureMeanVar(const Mat & windowData)
 {
 	Mat windowMean,windowStd,windowFeature;
 	meanStdDev(windowData,windowMean,windowStd);
 	/*double dd = windowStd.at<double>(0,0);*/
 	hconcat(windowMean,windowStd,windowFeature);
+	return windowFeature;
+}
+
+//提取分析窗中灰度值的拟合系数作为特征
+const Mat getWindowFeatureCoefficient(const Mat & windowData)
+{
+	double A=0,B=0,C=0,D=0;
+	double tmp,k,b;
+	/*int* pimg = (int*)(windowData.data);*/
+	for (int i=1;i<=windowData.rows;i++)
+	{
+		A += i*i;
+		B += i;
+		int imgray = windowData.data[i-1];
+		C += i*imgray;
+		D += imgray;
+	}
+	tmp = A*windowData.rows-B*B; 
+	k = (C*windowData.rows-B*D)/tmp; 
+	b = (A*D-C*B)/tmp;
+	Mat windowFeature = (Mat_<double>(1,2) << k,b);
+
+// 	Mat windowMean,windowStd,windowFeature;
+// 	meanStdDev(windowData,windowMean,windowStd);
+// 	/*double dd = windowStd.at<double>(0,0);*/
+// 	hconcat(windowMean,windowStd,windowFeature);
+// 	cvMul()
+// 	Mat windowMean,windowStd,windowFeature;
+// 	meanStdDev(windowData,windowMean,windowStd);
+// 	/*double dd = windowStd.at<double>(0,0);*/
+// 	hconcat(windowMean,windowStd,windowFeature);
 	return windowFeature;
 }
 
