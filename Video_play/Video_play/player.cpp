@@ -1,5 +1,5 @@
 #include "player.h"
-
+#include <opencv/cv.h>
 Player::Player(QObject *parent)
 	: QThread(parent)
 {
@@ -21,7 +21,7 @@ bool Player::loadVideo(String filename)
 	capture.open(filename);
 	if (capture.isOpened())
 	{
-		framerate = (int) capture.get(CAP_PROP_FPS);
+		framerate = (int) capture.get(CV_CAP_PROP_FPS);
 		return true;
 	}
 	else
@@ -63,9 +63,10 @@ void Player::run()
 			if (frame0.channels() == 3)
 			{
 				frame = frame0(Range(119,500),Range(285,800));
-				cv::cvtColor(frame,RGBframe,COLOR_BGR2GRAY);
-				/*emit extractFeatureSignal(RGBframe);*/
-				/*RGBframe = RGBframe(Range(119,500),Range(285,800));*/
+				//frame = frame0;
+
+				//cv::cvtColor(frame,frame,CV_BGR2RGB);
+				cv::cvtColor(frame,RGBframe,CV_BGR2GRAY);
 				img = QImage( (const unsigned char*)(RGBframe.data), RGBframe.cols, RGBframe.rows, RGBframe.step, QImage::Format_Indexed8);
 				/*cv::cvtColor(frame,RGBframe,COLOR_BGR2RGB);*/
 				/*img = QImage( (const unsigned char*)(RGBframe.data), RGBframe.cols, RGBframe.rows, RGBframe.step, QImage::Format_RGB888);*/

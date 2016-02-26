@@ -1,17 +1,15 @@
-﻿生成启动时间为 2016/2/22 19:15:05。
+﻿生成启动时间为 2016/2/26 18:07:25。
      1>项目“G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Video_play\Video_play.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\Video_play.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        CustomBuild:
          所有输出均为最新。
        ClCompile:
-         d:\Program Files\VC\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\QT\5.5\msvc2010\include /I.\GeneratedFiles\Debug /IC:\QT\5.5\msvc2010\include\QtCore /IC:\QT\5.5\msvc2010\include\QtGui /IC:\QT\5.5\msvc2010\include\QtMultimediaWidgets /IC:\QT\5.5\msvc2010\include\QtWidgets /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_MULTIMEDIAWIDGETS_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt video_play.cpp
-         video_play.cpp
-     1>C:\program file\opencv\build\include\opencv2/core/mat.hpp(1413): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-     1>C:\program file\opencv\build\include\opencv2/core/mat.hpp(1413): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+         d:\Program Files\VC\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\QT\5.5\msvc2010\include /I.\GeneratedFiles\Debug /IC:\QT\5.5\msvc2010\include\QtCore /IC:\QT\5.5\msvc2010\include\QtGui /IC:\QT\5.5\msvc2010\include\QtMultimediaWidgets /IC:\QT\5.5\msvc2010\include\QtWidgets /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_MULTIMEDIAWIDGETS_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt player.cpp
+         player.cpp
          所有输出均为最新。
        Link:
-         d:\Program Files\VC\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\\Video_play.exe" /NOLOGO /LIBPATH:C:\QT\5.5\msvc2010\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5MultimediaWidgetsd.lib Qt5Widgetsd.lib opencv_ts300.lib opencv_world300.lib opencv_ts300d.lib opencv_world300d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Video_play.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\Video_play.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\Video_play.lib" /MACHINE:X86 Debug\svm.obj
+         d:\Program Files\VC\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\\Video_play.exe" /NOLOGO /LIBPATH:C:\QT\5.5\msvc2010\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5MultimediaWidgetsd.lib Qt5Widgetsd.lib opencv_ml2410d.lib opencv_calib3d2410d.lib opencv_contrib2410d.lib opencv_core2410d.lib opencv_features2d2410d.lib opencv_flann2410d.lib opencv_gpu2410d.lib opencv_highgui2410d.lib opencv_imgproc2410d.lib opencv_legacy2410d.lib opencv_objdetect2410d.lib opencv_ts2410d.lib opencv_video2410d.lib opencv_nonfree2410d.lib opencv_ocl2410d.lib opencv_photo2410d.lib opencv_stitching2410d.lib opencv_superres2410d.lib opencv_videostab2410d.lib opencv_objdetect2410.lib opencv_ts2410.lib opencv_video2410.lib opencv_nonfree2410.lib opencv_ocl2410.lib opencv_photo2410.lib opencv_stitching2410.lib opencv_superres2410.lib opencv_videostab2410.lib opencv_calib3d2410.lib opencv_contrib2410.lib opencv_core2410.lib opencv_features2d2410.lib opencv_flann2410.lib opencv_gpu2410.lib opencv_highgui2410.lib opencv_imgproc2410.lib opencv_legacy2410.lib opencv_ml2410.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Video_play.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\Video_play.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Users\yjhuang\Documents\GitHub\Ultrasound_online_software\Video_play\Win32\Debug\Video_play.lib" /MACHINE:X86 Debug\svm.obj
          Debug\feature.obj
          Debug\featureparemeters.obj
          Debug\moc_featureparemeters.obj
@@ -32,4 +30,4 @@
 
 生成成功。
 
-已用时间 00:00:01.78
+已用时间 00:00:01.72

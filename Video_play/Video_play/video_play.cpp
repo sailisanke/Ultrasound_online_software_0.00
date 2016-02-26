@@ -6,7 +6,12 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include<vector>
 
+using namespace std;
+
+//vector<vector<double>> fea;
+//vector<int>	label;
 
 Video_play::Video_play(QWidget *parent)
 	: QMainWindow(parent)
@@ -36,14 +41,25 @@ void Video_play::updatePlayerUI(QImage img)
 		/*ui.label->show();*/
 	}
 }
-std::ofstream ofresult( "feature.txt ",std::ios::app); 
+
+
+
+
+
+struct svm_model *model;
+struct svm_node  *x;
+
 void Video_play::getFeature(QImage image)
 {
 	Mat matImage = Mat(image.height(),image.width(),CV_8UC1,(uchar*)image.bits(),image.bytesPerLine());
+	uchar seeee0 = matImage.at<uchar>(0,0);
+	uchar seeee1 = matImage.at<uchar>(1,1);
 	/*Mat matImage2 = cv::Mat(matImage.rows, matImage.cols, CV_8UC1 );*/
 // 	ui.dispalyMessage->setText("success!");
 // 	ui.dispalyMessage->show();
 	Mat imageFeature = getImageFeature(matImage,currentParametersSettings);
+// 	vector<double> feature;
+// 	feature = vector<double>(imageFeature.reshape(1,1));
 // 	double* pimg = (double*)(imageFeature.data);
 // 	double aaaa = pimg[0];
 // 	double bbbb = (double)imageFeature.data[0];

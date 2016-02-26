@@ -6,12 +6,13 @@ const Mat getImageFeature(const Mat & grayImage, const Video_play::parametersSet
 	int imageColumnDistance = grayImage.cols/(currentParametersSettings.channelNumber + 1);
 	int step = currentParametersSettings.windowLength-currentParametersSettings.overlap;
 	int windowNumber = (grayImage.rows - currentParametersSettings.windowLength)/step + 1;
-	Mat currentImageFeature( 2 * windowNumber,currentParametersSettings.channelNumber,CV_64FC1);
+	Mat currentImageFeature( 2 * windowNumber,currentParametersSettings.channelNumber,CV_64F);
 	for (int i = 0; i < currentParametersSettings.channelNumber; i ++)
 	{
 		int channelPosition = imageColumnDistance * (i + 1);
 		Mat currentColumnData = grayImage.col(channelPosition);
-		Mat currentColumnFeature(windowNumber,2,CV_64FC1);
+
+		Mat currentColumnFeature(windowNumber,2,CV_64F);
 		/*Mat currentColumnFeatureRow(1,2 * windowNumber,CV_8UC1);*/
 
 		for (int j=0; j < windowNumber; j++ )
@@ -66,20 +67,39 @@ const Mat getWindowFeatureMeanVar(const Mat & windowData)
 //提取分析窗中灰度值的拟合系数作为特征
 const Mat getWindowFeatureCoefficient(const Mat & windowData)
 {
-	double A=0,B=0,C=0,D=0;
-	double tmp,k,b;
-	/*int* pimg = (int*)(windowData.data);*/
-	for (int i=1;i<=windowData.rows;i++)
+// 	double A=0,B=0,C=0,D=0;
+// 	double tmp,k,b;
+// 	/*int* pimg = (int*)(windowData.data);*/
+// 	for (int i=1;i<=windowData.rows;i++)
+// 	{
+// 		A += i*i;
+// 		B += i;
+// 		uchar imgray = windowData.data[i-1];
+// 		C += i*imgray;
+// 		D += imgray;
+// 	}
+// 	tmp = A*windowData.rows-B*B; 
+// 	k = (C*windowData.rows-B*D)/tmp; 
+// 	b = (A*D-C*B)/tmp;
+//  两种方法都可以
+	double x_mean = (1+windowData.rows)/2.0;
+	double y_mean,y_sum;
+	for (int i=0;i<windowData.rows;i++)
 	{
-		A += i*i;
-		B += i;
-		int imgray = windowData.data[i-1];
-		C += i*imgray;
-		D += imgray;
+		y_sum += windowData.data[i];
 	}
-	tmp = A*windowData.rows-B*B; 
-	k = (C*windowData.rows-B*D)/tmp; 
-	b = (A*D-C*B)/tmp;
+	y_mean = y_sum/windowData.rows;
+	double lxy = 0,lxx = 0;
+	for (int i=0;i<windowData.rows;i++)
+	{
+		uchar yi = windowData.data[i];
+		lxy += ((i+1)-x_mean) * (yi-y_mean);
+		lxx += ((i+1)-x_mean) * ((i+1)-x_mean);
+	}
+
+	double k = lxy/lxx;
+	double b = y_mean - k*x_mean; 
+
 	Mat windowFeature = (Mat_<double>(1,2) << k,b);
 
 // 	Mat windowMean,windowStd,windowFeature;
